@@ -1,0 +1,11 @@
+# robots.txt for Street University Tanzania
+# https://streetuniversity.co.tz/
+
+User-agent: *
+Allow: /
+Allow: /public/
+Allow: /css/
+Allow: /js/
+
+# Host & Sitemap
+Sitemap: https://streetuniversity.co.tz/sitemap.xml
