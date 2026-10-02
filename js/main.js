@@ -1,6 +1,6 @@
 /**
  * Street University - Main Interactive Application Script
- * "Badili Fikra. Badili Maisha."
+ * "Transform Minds • Transform Lives."
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initForms();
   initContactHub();
   initSpotlightSearch();
+  initScrollToTop();
 });
 
 /* ==========================================================================
@@ -92,15 +93,23 @@ function initNavbar() {
   const navMenu = document.querySelector('.nav-menu');
   const navLinks = document.querySelectorAll('.nav-link');
 
+  // Robust multi-environment scroll getter (covers window, html, body)
+  const getScrollPos = () => {
+    return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || window.scrollY || 0;
+  };
+
   // Sticky header class toggle with immediate initialization check
   const handleScroll = () => {
-    if (window.scrollY > 15) {
+    if (getScrollPos() > 10) {
       header?.classList.add('scrolled');
     } else {
       header?.classList.remove('scrolled');
     }
   };
   window.addEventListener('scroll', handleScroll, { passive: true });
+  document.addEventListener('scroll', handleScroll, { passive: true });
+  document.body.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('touchmove', handleScroll, { passive: true });
   handleScroll();
 
   // Create or attach smooth mobile backdrop overlay
@@ -320,7 +329,7 @@ const projectDatabase = {
     tagline: "Mass youth mobilization for mindset transformation and nation building",
     description: "Our signature flagship events gathering thousands of students, university graduates, young professionals, and seasoned icons under one roof. Live broadcasts and interactive keynotes make these the premier youth platforms in the country.",
     objectives: [
-      "Spark transformative mindset shifts: 'Badili Fikra. Badili Maisha.'",
+      "Spark transformative mindset shifts: 'Transform Minds • Transform Lives.'",
       "Connect high-level business leaders and government executives directly with youth.",
       "Offer transparent dialogue on employment, self-reliance, and entrepreneurship.",
       "Build cross-regional networks and lasting professional relationships."
@@ -756,14 +765,14 @@ function initForms() {
 
       await submitPayload(formData, subject, submitBtn);
 
-      let confirmationMsg = `Asante ${name}! Ujumbe wako umepokelewa na kuwasilishwa kwenda ${recipientEmail}.`;
+      let confirmationMsg = `Thank you ${name}! Your inquiry has been received and forwarded to ${recipientEmail}.`;
       if (intent === 'join') {
-        confirmationMsg = `Hongera sana ${name}! Maombi yako ya kujiunga na Street University yametumwa kwa ${recipientEmail}. Timu itawasiliana nawe hivi karibuni.`;
+        confirmationMsg = `Congratulations ${name}! Your application to join Street University has been dispatched to ${recipientEmail}. Our admissions team will be in touch shortly.`;
       } else if (intent === 'partner') {
-        const org = formData.get('organization_name') || 'taasisi yako';
-        confirmationMsg = `Ahsante ${name}! Pendekezo la ushirikiano kutoka ${org} limetumwa kwa ${recipientEmail}. Dawati la ushirikiano litawasiliana nanyi.`;
+        const org = formData.get('organization_name') || 'your organization';
+        confirmationMsg = `Thank you ${name}! The partnership proposal from ${org} has been submitted to ${recipientEmail}. Our partnerships desk will follow up.`;
       } else if (intent === 'mentor') {
-        confirmationMsg = `Ahsante sana ${name}! Ombi lako la kuwa Mentor/Speaker limepokelewa na kutumwa kwa ${recipientEmail}.`;
+        confirmationMsg = `Thank you ${name}! Your application to join our Mentor & Speaker Network has been received and sent to ${recipientEmail}.`;
       }
       showToast(confirmationMsg);
       contactHubForm.reset();
@@ -815,13 +824,13 @@ function initContactHub() {
   const intentConfigs = {
     join: {
       badgeIcon: 'fa-graduation-cap',
-      badgeText: 'USHIRIKI: JIUNGE NASI (JOIN US)',
-      heading: 'Fomu ya Kujiunga na Street University',
-      subtext: 'Jaza taarifa zako hapa chini kupokea fursa za mafunzo ya ujasiriamali, teknolojia ya AI, na semina mkoani kwako.',
+      badgeText: 'PARTICIPATION: JOIN US',
+      heading: 'Street University Enrollment Form',
+      subtext: 'Fill out your details below to receive access to practical entrepreneurship programs, AI technology workshops, and regional summits.',
       subject: 'New Street University Application (Join Us)',
-      submitText: '<i class="fa-solid fa-graduation-cap"></i> Wasilisha Maombi ya Kujiunga (Forward to info@streetuniversity.co.tz)',
-      messageLabel: 'Malengo Yako au Ujumbe wa Ziada (Your Goals or Message) *',
-      messagePlaceholder: 'Eleza kwa ufupi kile unachotamani kujifunza au kufikia kupitia Street University...',
+      submitText: '<i class="fa-solid fa-graduation-cap"></i> Submit Application (Forward to info@streetuniversity.co.tz)',
+      messageLabel: 'Your Goals or Additional Message *',
+      messagePlaceholder: 'Briefly explain what you hope to learn or achieve through Street University...',
       showJoin: true,
       showPartner: false,
       showMentor: false,
@@ -831,13 +840,13 @@ function initContactHub() {
     },
     partner: {
       badgeIcon: 'fa-handshake',
-      badgeText: 'USHIRIKIANO: PARTNER WITH US',
-      heading: 'Pendekezo la Ushirikiano wa Kitaasisi & Udhamini',
-      subtext: 'Ungana na Street University kuwezesha vijana wa Kitanzania kupitia miradi ya CSR, mafunzo ya biashara, na ufadhili wa ujuzi.',
+      badgeText: 'INSTITUTIONAL PARTNERSHIP',
+      heading: 'Partnership & Sponsorship Proposal',
+      subtext: 'Collaborate with Street University to empower young Tanzanians through CSR initiatives, business skills training, and tech sponsorship.',
       subject: 'New Institutional Partnership Proposal (Partner With Us)',
-      submitText: '<i class="fa-solid fa-handshake"></i> Wasilisha Pendekezo la Ushirikiano (Forward to info@streetuniversity.co.tz)',
-      messageLabel: 'Muhtasari wa Pendekezo la Ushirikiano (Partnership Proposal Summary) *',
-      messagePlaceholder: 'Eleza malengo ya taasisi yako, aina ya ushirikiano unaopendekezwa, au mikoa mliyolenga...',
+      submitText: '<i class="fa-solid fa-handshake"></i> Submit Partnership Proposal (Forward to info@streetuniversity.co.tz)',
+      messageLabel: 'Partnership Proposal Overview *',
+      messagePlaceholder: 'Describe your organization\'s objectives, proposed partnership format, or targeted regions...',
       showJoin: false,
       showPartner: true,
       showMentor: false,
@@ -847,13 +856,13 @@ function initContactHub() {
     },
     general: {
       badgeIcon: 'fa-envelope-open-text',
-      badgeText: 'MAWASILIANO YA OFISI NA MAULIZO',
-      heading: 'Wasiliana na Dawati Kuu la Street University',
-      subtext: 'Tuma swali, maoni, au maombi ya ufafanuzi kuhusu miradi, makongamano, na programu zetu za kitaifa.',
+      badgeText: 'OFFICE & GENERAL INQUIRIES',
+      heading: 'Connect with Street University Secretariat',
+      subtext: 'Send a question, feedback, or inquiry regarding our nationwide initiatives, summits, and youth programs.',
       subject: 'General Desk Inquiry - Street University',
-      submitText: '<i class="fa-solid fa-paper-plane"></i> Tuma Ujumbe Ofisini (Forward to info@streetuniversity.co.tz)',
-      messageLabel: 'Ujumbe Wako au Swali (Your Message / Inquiry) *',
-      messagePlaceholder: 'Andika maelezo au swali lako kwa undani hapa...',
+      submitText: '<i class="fa-solid fa-paper-plane"></i> Send Message (Forward to info@streetuniversity.co.tz)',
+      messageLabel: 'Your Message / Inquiry *',
+      messagePlaceholder: 'Type your message or inquiry in detail here...',
       showJoin: false,
       showPartner: false,
       showMentor: false,
@@ -863,13 +872,13 @@ function initContactHub() {
     },
     mentor: {
       badgeIcon: 'fa-microphone-lines',
-      badgeText: 'MENTORSHIP & SPEAKING NETWORK',
-      heading: 'Jiunge kama Mwezeshaji, Mentor au Speaker',
-      subtext: 'Shiriki ujuzi wako wa kitaalamu na uzoefu wa kibiashara kuhamasisha na kujenga kizazi kipya cha vijana nchini.',
+      badgeText: 'MENTORSHIP & SPEAKER NETWORK',
+      heading: 'Apply as a Mentor or Keynote Speaker',
+      subtext: 'Share your professional expertise and industry experience to inspire and elevate the next generation.',
       subject: 'New Mentor / Speaker Volunteer Application',
-      submitText: '<i class="fa-solid fa-check-circle"></i> Wasilisha Ombi la Mentor (Forward to info@streetuniversity.co.tz)',
-      messageLabel: 'Mada Unazoweza Kufundisha au Kushiriki (Topics & Experience) *',
-      messagePlaceholder: 'Taja mada unazoweza kuongoza, uzoefu wako wa kikazi, na namna unavyopenda kusaidia vijana...',
+      submitText: '<i class="fa-solid fa-check-circle"></i> Submit Mentor Application (Forward to info@streetuniversity.co.tz)',
+      messageLabel: 'Topics You Can Lead & Professional Experience *',
+      messagePlaceholder: 'List topics you can teach, your background, and how you would like to empower youth...',
       showJoin: false,
       showPartner: false,
       showMentor: true,
@@ -994,7 +1003,7 @@ function initSpotlightSearch() {
     { title: "Mentor / Speaker Network", desc: "Share your business and technical expertise with youth", link: "contact.html?type=mentor" },
     { title: "Verified Impact & Numbers", desc: "17+ years, 85,000+ youth, 26+ regions reached", link: "index.html#impact" },
     { title: "Our Reach Across Tanzania", desc: "Campuses, colleges, communities across all zones", link: "index.html#reach" },
-    { title: "Philosophy: Badili Fikra Badili Maisha", desc: "Learn, Connect, Create, Grow", link: "index.html#philosophy" }
+    { title: "Philosophy: Transform Minds • Transform Lives", desc: "Learn, Connect, Create, Grow", link: "index.html#philosophy" }
   ];
 
   function renderResults(filterText = '') {
@@ -1054,5 +1063,73 @@ function initSpotlightSearch() {
 
   searchInput.addEventListener('input', () => {
     renderResults(searchInput.value);
+  });
+}
+
+/* ==========================================================================
+   11. SCROLL TO TOP FLOATING BUTTON WITH PROGRESS RING
+   ========================================================================== */
+function initScrollToTop() {
+  let scrollBtn = document.getElementById('scroll-to-top');
+  if (!scrollBtn) {
+    scrollBtn = document.createElement('button');
+    scrollBtn.id = 'scroll-to-top';
+    scrollBtn.className = 'scroll-to-top-btn';
+    scrollBtn.setAttribute('aria-label', 'Scroll back to top');
+    scrollBtn.setAttribute('title', 'Scroll to Top');
+    scrollBtn.innerHTML = `
+      <svg class="scroll-progress-svg" viewBox="0 0 48 48">
+        <circle class="scroll-progress-bg" cx="24" cy="24" r="20"></circle>
+        <circle class="scroll-progress-bar" cx="24" cy="24" r="20"></circle>
+      </svg>
+      <i class="fa-solid fa-arrow-up"></i>
+    `;
+    document.body.appendChild(scrollBtn);
+  }
+
+  const progressBar = scrollBtn.querySelector('.scroll-progress-bar');
+  const circumference = 2 * Math.PI * 20; // ~125.66
+
+  if (progressBar) {
+    progressBar.style.strokeDasharray = `${circumference} ${circumference}`;
+    progressBar.style.strokeDashoffset = circumference;
+  }
+
+  function handleScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || window.scrollY || 0;
+    const docHeight = Math.max(
+      document.body.scrollHeight, document.documentElement.scrollHeight,
+      document.body.offsetHeight, document.documentElement.offsetHeight,
+      document.body.clientHeight, document.documentElement.clientHeight
+    ) - (window.innerHeight || document.documentElement.clientHeight);
+
+    // Visible early past 60px of scrolling for immediate tactile access
+    if (scrollTop > 60) {
+      scrollBtn.classList.add('show');
+    } else {
+      scrollBtn.classList.remove('show');
+    }
+
+    if (progressBar && docHeight > 0) {
+      const progress = Math.min(1, Math.max(0, scrollTop / docHeight));
+      const offset = circumference - (progress * circumference);
+      progressBar.style.strokeDashoffset = offset;
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  document.addEventListener('scroll', handleScroll, { passive: true });
+  document.body.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('touchmove', handleScroll, { passive: true });
+  handleScroll();
+
+  scrollBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   });
 }
