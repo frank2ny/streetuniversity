@@ -39,7 +39,7 @@
   <link rel="apple-touch-icon" href="public/images/su logo.jpeg">
 
   <!-- Google Fonts & Stylesheet -->
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=2.1">
   
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -197,25 +197,128 @@
             </div>
           </div>
 
-          <!-- Hero Visual Composition with Real Event Photojournalism -->
+          <!-- Hero Visual Composition with Real Event Photojournalism & Auto-Scrolling Slider -->
           <div class="hero-visual">
-            <div class="hero-photo-frame">
+            <div class="hero-photo-frame" id="hero-slider" tabindex="0" role="region" aria-label="Street University Event Photo Archive Showcase">
+              <!-- Archive Stamp (Floating Top Right) -->
               <div class="hero-archive-stamp">
                 <span class="stamp-title">OFFICIAL ARCHIVE</span>
                 <span class="stamp-year">EST. 2008</span>
                 <span class="stamp-sub">GLOBAL PUBLISHERS</span>
               </div>
-              <img src="public/images/event/WhatsApp Image 2026-09-29 at 12.53.30 PM.jpeg" alt="Massive Youth Audience at Street University National Gathering" class="hero-main-img">
-              
-              <div class="hero-editorial-caption">
-                <span class="hero-caption-place">
-                  <i class="fa-solid fa-location-dot"></i> Dar es Salaam • National Youth Summit
-                </span>
-                <p>Hundreds of young leaders and entrepreneurs attending practical masterclasses on economics, business scaling, and digital opportunities.</p>
-                <div class="hero-caption-footer">
-                  <span>Photo: Street University Archive</span>
-                  <span>"Transform Minds • Transform Lives"</span>
+
+              <!-- Live Counter & Status Badge (Top Left) -->
+              <div class="hero-slider-badge">
+                <span class="badge-dot"></span>
+                <span class="badge-text">LIVE ARCHIVE</span>
+                <span class="badge-counter"><strong id="hero-slide-num">01</strong> / 05</span>
+              </div>
+
+              <!-- Floating Navigation Controls -->
+              <button class="hero-slider-arrow prev-btn" id="hero-slider-prev" aria-label="Previous Photo">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <button class="hero-slider-arrow next-btn" id="hero-slider-next" aria-label="Next Photo">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+
+              <!-- Main Slider Viewport & Track -->
+              <div class="hero-slider-viewport" style="position: relative; width: 100%; overflow: hidden;">
+                <div class="hero-slider-track" id="hero-slider-track" style="display: flex; flex-direction: row; flex-wrap: nowrap; width: 100%;">
+                  <!-- Slide 1 -->
+                  <div class="hero-slide active" style="min-width: 100%; width: 100%; flex: 0 0 100%;">
+                    <img src="public/images/event/WhatsApp%20Image%202026-09-29%20at%2012.53.30%20PM.jpeg" alt="Massive Youth Audience at Street University National Gathering" class="hero-main-img" loading="eager">
+                    <div class="hero-editorial-caption">
+                      <span class="hero-caption-place">
+                        <i class="fa-solid fa-location-dot"></i> Dar es Salaam • National Youth Summit
+                      </span>
+                      <p>Hundreds of young leaders and entrepreneurs attending practical masterclasses on economics, business scaling, and digital opportunities.</p>
+                      <div class="hero-caption-footer">
+                        <span>Photo: Street University Archive</span>
+                        <span>"Transform Minds • Transform Lives"</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 2 -->
+                  <div class="hero-slide" style="min-width: 100%; width: 100%; flex: 0 0 100%;">
+                    <img src="public/images/event/WhatsApp%20Image%202026-09-29%20at%2012.53.33%20PM.jpeg" alt="Youth Entrepreneurship and Practical Masterclass Session" class="hero-main-img" loading="lazy">
+                    <div class="hero-editorial-caption">
+                      <span class="hero-caption-place">
+                        <i class="fa-solid fa-location-dot"></i> Mwanza • Lake Zone Empowerment Forum
+                      </span>
+                      <p>Interactive practical sessions connecting youth with financial tools, mentorship, and sustainable business growth strategies.</p>
+                      <div class="hero-caption-footer">
+                        <span>Photo: Street University Archive</span>
+                        <span>"Practical Knowledge for Action"</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 3 -->
+                  <div class="hero-slide" style="min-width: 100%; width: 100%; flex: 0 0 100%;">
+                    <img src="public/images/event/WhatsApp%20Image%202026-09-29%20at%2012.53.36%20PM.jpeg" alt="AI Technology and Future Skills Workshop" class="hero-main-img" loading="lazy">
+                    <div class="hero-editorial-caption">
+                      <span class="hero-caption-place">
+                        <i class="fa-solid fa-location-dot"></i> Dodoma • AI & Digital Innovation Forum
+                      </span>
+                      <p>Equipping young Tanzanians with modern digital tools, artificial intelligence literacy, and futuristic economic skills.</p>
+                      <div class="hero-caption-footer">
+                        <span>Photo: Street University Archive</span>
+                        <span>"Future Skills Today"</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 4 -->
+                  <div class="hero-slide" style="min-width: 100%; width: 100%; flex: 0 0 100%;">
+                    <img src="public/images/event/WhatsApp%20Image%202026-09-29%20at%2012.53.39%20PM.jpeg" alt="Grassroots Youth Leadership & Mentorship Gathering" class="hero-main-img" loading="lazy">
+                    <div class="hero-editorial-caption">
+                      <span class="hero-caption-place">
+                        <i class="fa-solid fa-location-dot"></i> Arusha • Northern Zone Innovation Summit
+                      </span>
+                      <p>Direct dialogue between community leaders, founders, and youth seeking practical career direction and capital access.</p>
+                      <div class="hero-caption-footer">
+                        <span>Photo: Street University Archive</span>
+                        <span>"Empowering Community Leaders"</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Slide 5 -->
+                  <div class="hero-slide" style="min-width: 100%; width: 100%; flex: 0 0 100%;">
+                    <img src="public/images/event/WhatsApp%20Image%202026-09-29%20at%2012.53.43%20PM.jpeg" alt="National Youth Gathering and Economic Empowerment" class="hero-main-img" loading="lazy">
+                    <div class="hero-editorial-caption">
+                      <span class="hero-caption-place">
+                        <i class="fa-solid fa-location-dot"></i> Morogoro • Mindset & Economic Workshop
+                      </span>
+                      <p>Igniting mindset change and self-reliance among thousands of passionate young innovators across regions.</p>
+                      <div class="hero-caption-footer">
+                        <span>Photo: Street University Archive</span>
+                        <span>"Transforming Communities"</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
+
+              <!-- Auto-Progress Timer Bar -->
+              <div class="hero-slider-progress">
+                <div class="hero-slider-progress-bar" id="hero-slider-progress-bar"></div>
+              </div>
+
+              <!-- Bottom Controls & Dots Navigation -->
+              <div class="hero-slider-footer-controls">
+                <div class="hero-slider-dots" id="hero-slider-dots">
+                  <button class="dot active" data-slide="0" aria-label="Go to slide 1"></button>
+                  <button class="dot" data-slide="1" aria-label="Go to slide 2"></button>
+                  <button class="dot" data-slide="2" aria-label="Go to slide 3"></button>
+                  <button class="dot" data-slide="3" aria-label="Go to slide 4"></button>
+                  <button class="dot" data-slide="4" aria-label="Go to slide 5"></button>
+                </div>
+                <button class="hero-slider-playpause" id="hero-slider-playpause" aria-label="Pause Slideshow" title="Pause / Play Slideshow">
+                  <i class="fa-solid fa-pause"></i>
+                </button>
               </div>
             </div>
           </div>
