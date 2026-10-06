@@ -442,40 +442,419 @@ function initMediaFilters() {
 }
 
 /* ==========================================================================
-   6. PHOTO LIGHTBOX VIEWER
+   6. PHOTO LIGHTBOX VIEWER (INTERACTIVE FLOW & 3D STACK SYSTEM)
    ========================================================================== */
+const photoCatalog = [
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.30 PM.jpeg", title: "Auditorium Full of Aspiring Leaders", category: "National Summits", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.30 PM (1).jpeg", title: "Higher Learning Tour & Student Dialogue", category: "Campus Tours", album: "tours" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.30 PM (2).jpeg", title: "Over 2,500 Attendees Listening Attentively", category: "National Summits", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.31 PM.jpeg", title: "Young Innovators & Tech Enthusiasts", category: "Tech & AI", album: "tech" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.31 PM (1).jpeg", title: "Tech & Digital Transformation Workshop", category: "Tech & AI", album: "tech" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.31 PM (2).jpeg", title: "Empowering Young Women Leaders", category: "Youth Empowerment", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.32 PM.jpeg", title: "Open Floor Q&A with Industry Icons", category: "Public Dialogue", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.32 PM (1).jpeg", title: "Youth Raising Hands in Enthusiastic Discussion", category: "Interactive Dialogue", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.33 PM.jpeg", title: "Personal Growth & Mindset Transformation", category: "Mindset & Growth", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.33 PM (1).jpeg", title: "Peer Collaborative Problem Solving", category: "Mentorship", album: "tours" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.33 PM (2).jpeg", title: "Lake Zone Regional Tour Gathering", category: "Regional Tours", album: "tours" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.34 PM.jpeg", title: "Keynote Address to Over 3,000 Attendees", category: "National Summits", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.35 PM.jpeg", title: "Artificial Intelligence & Coding Bootcamp", category: "Tech & AI", album: "tech" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.35 PM (1).jpeg", title: "University Campus Student Exchange", category: "Campus Tours", album: "tours" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.35 PM (2).jpeg", title: "Career Guidance & Transitioning to Business", category: "Career Guidance", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.35 PM (3).jpeg", title: "Mega Youth Platform Full Capacity Auditorium", category: "National Summits", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.36 PM.jpeg", title: "Innovator Spotlight & Project Showcase", category: "Tech & AI", album: "tech" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.36 PM (1).jpeg", title: "Youth Energy - Transform Minds Transform Lives", category: "National Summits", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.37 PM.jpeg", title: "Imbeju Financial Outreach & Clinic", category: "Imbeju Economic", album: "imbeju" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.37 PM (1).jpeg", title: "Connecting Micro-Enterprises to Seed Capital", category: "Imbeju Economic", album: "imbeju" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.38 PM.jpeg", title: "National Youth Summit Executive Panel", category: "National Summits", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.38 PM (1).jpeg", title: "Panelists Answering Audience Questions", category: "National Summits", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.39 PM.jpeg", title: "Engaged Audience Taking Notes on Strategy", category: "Workshops", album: "tours" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.39 PM (1).jpeg", title: "Tanzania Wide Youth Network", category: "Community Network", album: "tours" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.40 PM.jpeg", title: "One-on-One Mentoring & Strategic Advice", category: "Mentorship", album: "imbeju" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.40 PM (1).jpeg", title: "Young Leaders Taking Civic Action", category: "Leadership", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.40 PM (2).jpeg", title: "Building Sustainable Enterprise Models", category: "Imbeju Economic", album: "imbeju" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.41 PM.jpeg", title: "Celebrating Youth Achievements & Milestones", category: "Awards & Impact", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.41 PM (1).jpeg", title: "Grassroots Youth Community Outreaches", category: "Grassroots", album: "imbeju" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.41 PM (2).jpeg", title: "Civic Leadership & Skills Workshops", category: "Leadership", album: "tours" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.42 PM.jpeg", title: "Empowering Next-Generation Tech Creators", category: "Tech & AI", album: "tech" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.42 PM (1).jpeg", title: "Open Public Forum in Grassroots Municipalities", category: "Grassroots", album: "imbeju" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.43 PM.jpeg", title: "Secondary School Mentorship & Career Clinic", category: "School Outreaches", album: "tours" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.43 PM (1).jpeg", title: "Encouraging Early Digital & Financial Literacy", category: "Tech & AI", album: "tech" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.43 PM (2).jpeg", title: "Student Leadership Delegation", category: "Leadership", album: "tours" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.44 PM.jpeg", title: "National Convention Participant Spotlight", category: "National Summits", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.44 PM (1).jpeg", title: "Imbeju Pitch Session & Seed Funding", category: "Imbeju Economic", album: "imbeju" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.45 PM.jpeg", title: "Digital Freelancing & Remote Work Lab", category: "Tech & AI", album: "tech" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.45 PM (1).jpeg", title: "Collaborative Workshop Strategy Session", category: "Workshops", album: "tours" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.45 PM (2).jpeg", title: "Transforming Mindsets Across Tanzania", category: "National Summits", album: "summits" },
+  { src: "public/images/event/WhatsApp Image 2026-09-29 at 12.53.46 PM.jpeg", title: "Future Ready: Street University Movement", category: "Movement", album: "summits" }
+];
+
+let currentPhotoIndex = 0;
+let currentActiveAlbum = 'all';
+let currentViewMode = 'flow'; // 'flow' or 'stack'
+let isPhotoZoomed = false;
+
 function initPhotoLightbox() {
-  const galleryItems = document.querySelectorAll('.gallery-item');
+  ensureLightboxModalExists();
+  buildFilmstrip();
+  bindLightboxEvents();
+}
+
+function ensureLightboxModalExists() {
+  let lightbox = document.getElementById('photo-lightbox-modal');
+  if (!lightbox) {
+    lightbox = document.createElement('div');
+    lightbox.id = 'photo-lightbox-modal';
+    lightbox.className = 'modal-overlay photo-flow-lightbox';
+    document.body.appendChild(lightbox);
+  } else {
+    lightbox.classList.add('photo-flow-lightbox');
+  }
+
+  lightbox.innerHTML = `
+    <div class="flow-lightbox-container">
+      <div class="flow-lightbox-header">
+        <div class="flow-header-left">
+          <span class="flow-category-badge" id="flow-category-badge">National Convention</span>
+          <h4 class="flow-photo-title" id="flow-photo-title">Auditorium Full of Aspiring Leaders</h4>
+          <span class="flow-counter-pill" id="flow-counter-pill">1 / 41</span>
+        </div>
+        <div class="flow-header-actions">
+          <button class="flow-action-btn mode-toggle-btn" id="flow-mode-toggle-btn" title="Toggle View Mode (Flow / 3D Stack)">
+            <i class="fa-solid fa-layer-group"></i>
+            <span class="btn-text">3D Stack Mode</span>
+          </button>
+          <button class="flow-action-btn" id="flow-zoom-btn" title="Toggle Zoom">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </button>
+          <button class="flow-action-btn" id="flow-fullscreen-btn" title="Toggle Fullscreen">
+            <i class="fa-solid fa-expand"></i>
+          </button>
+          <button class="flow-action-btn flow-close-btn" id="flow-close-btn" title="Close Viewer (Esc)">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flow-main-stage" id="flow-main-stage">
+        <button class="flow-nav-btn prev" id="flow-prev-btn" aria-label="Previous Photo" title="Previous (Left Arrow)">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="flow-nav-btn next" id="flow-next-btn" aria-label="Next Photo" title="Next (Right Arrow)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+        <div class="flow-slide-viewport" id="flow-slide-viewport">
+          <div class="flow-active-image-wrap" id="flow-active-image-wrap">
+            <img src="" alt="" class="flow-active-img" id="flow-active-img">
+          </div>
+          <div class="flow-3d-stack-deck" id="flow-3d-stack-deck" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="flow-filmstrip-wrapper">
+        <div class="flow-filmstrip" id="flow-filmstrip"></div>
+      </div>
+    </div>
+  `;
+}
+
+function buildFilmstrip() {
+  const filmstrip = document.getElementById('flow-filmstrip');
+  if (!filmstrip) return;
+  filmstrip.innerHTML = '';
+
+  photoCatalog.forEach((item, index) => {
+    const thumb = document.createElement('div');
+    thumb.className = `flow-thumb-item ${index === 0 ? 'active' : ''}`;
+    thumb.dataset.index = index;
+    thumb.title = `${item.title} (${item.category})`;
+    thumb.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
+    thumb.addEventListener('click', () => {
+      openPhotoIndex(index);
+    });
+    filmstrip.appendChild(thumb);
+  });
+}
+
+function openPhotoIndex(index) {
+  if (index < 0) index = photoCatalog.length - 1;
+  if (index >= photoCatalog.length) index = 0;
+  currentPhotoIndex = index;
+
+  const item = photoCatalog[index];
+  if (!item) return;
+
+  const lightbox = document.getElementById('photo-lightbox-modal');
+  const catBadge = document.getElementById('flow-category-badge');
+  const titleEl = document.getElementById('flow-photo-title');
+  const counterEl = document.getElementById('flow-counter-pill');
+  const activeImg = document.getElementById('flow-active-img');
+
+  if (catBadge) catBadge.textContent = item.category;
+  if (titleEl) titleEl.textContent = item.title;
+  if (counterEl) counterEl.textContent = `${index + 1} / ${photoCatalog.length}`;
+
+  if (activeImg) {
+    activeImg.src = item.src;
+    activeImg.alt = item.title;
+    activeImg.classList.remove('zoomed');
+    isPhotoZoomed = false;
+  }
+
+  // Update Filmstrip Highlights
+  const thumbs = document.querySelectorAll('.flow-thumb-item');
+  thumbs.forEach((t, i) => {
+    if (i === index) {
+      t.classList.add('active');
+      t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    } else {
+      t.classList.remove('active');
+    }
+  });
+
+  // Render 3D Deck if currently in stack mode
+  if (currentViewMode === 'stack') {
+    render3DStackDeck();
+  }
+
+  if (lightbox) {
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function render3DStackDeck() {
+  const deck = document.getElementById('flow-3d-stack-deck');
+  if (!deck) return;
+  deck.innerHTML = '';
+
+  const total = photoCatalog.length;
+  // Render current + next 3 cards
+  for (let offset = 2; offset >= 0; offset--) {
+    const idx = (currentPhotoIndex + offset) % total;
+    const photo = photoCatalog[idx];
+    const card = document.createElement('div');
+    card.className = 'stack-deck-card';
+
+    let rotate = 0;
+    let translateY = 0;
+    let scale = 1;
+    let zIndex = 3 - offset;
+    let opacity = 1;
+
+    if (offset === 0) {
+      rotate = 0;
+      translateY = 0;
+      scale = 1;
+    } else if (offset === 1) {
+      rotate = 6;
+      translateY = -12;
+      scale = 0.95;
+      opacity = 0.88;
+    } else if (offset === 2) {
+      rotate = -8;
+      translateY = -24;
+      scale = 0.9;
+      opacity = 0.72;
+    }
+
+    card.style.transform = `rotate(${rotate}deg) translateY(${translateY}px) scale(${scale})`;
+    card.style.zIndex = zIndex;
+    card.style.opacity = opacity;
+
+    card.innerHTML = `
+      <img src="${photo.src}" alt="${photo.title}">
+      <div class="deck-card-caption">
+        <h6>${photo.title}</h6>
+        <span>${photo.category}</span>
+      </div>
+    `;
+
+    card.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openPhotoIndex(currentPhotoIndex + 1);
+    });
+
+    deck.appendChild(card);
+  }
+}
+
+function toggleViewMode() {
+  const flowWrap = document.getElementById('flow-active-image-wrap');
+  const deck = document.getElementById('flow-3d-stack-deck');
+  const toggleBtn = document.getElementById('flow-mode-toggle-btn');
+
+  if (currentViewMode === 'flow') {
+    currentViewMode = 'stack';
+    if (flowWrap) flowWrap.style.display = 'none';
+    if (deck) deck.style.display = 'block';
+    if (toggleBtn) {
+      toggleBtn.classList.add('stack-active');
+      toggleBtn.innerHTML = `<i class="fa-solid fa-film"></i> <span class="btn-text">Flow View Mode</span>`;
+    }
+    render3DStackDeck();
+  } else {
+    currentViewMode = 'flow';
+    if (flowWrap) flowWrap.style.display = 'flex';
+    if (deck) deck.style.display = 'none';
+    if (toggleBtn) {
+      toggleBtn.classList.remove('stack-active');
+      toggleBtn.innerHTML = `<i class="fa-solid fa-layer-group"></i> <span class="btn-text">3D Stack Mode</span>`;
+    }
+  }
+}
+
+function closePhotoLightbox() {
+  const lightbox = document.getElementById('photo-lightbox-modal');
+  if (lightbox) {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+function bindLightboxEvents() {
   const lightbox = document.getElementById('photo-lightbox-modal');
   if (!lightbox) return;
 
-  const lightboxImg = lightbox.querySelector('.lightbox-img');
-  const lightboxCaption = lightbox.querySelector('.lightbox-caption');
-  const closeBtn = lightbox.querySelector('.lightbox-close-btn');
+  const closeBtn = document.getElementById('flow-close-btn');
+  const prevBtn = document.getElementById('flow-prev-btn');
+  const nextBtn = document.getElementById('flow-next-btn');
+  const modeBtn = document.getElementById('flow-mode-toggle-btn');
+  const zoomBtn = document.getElementById('flow-zoom-btn');
+  const fsBtn = document.getElementById('flow-fullscreen-btn');
+  const activeImg = document.getElementById('flow-active-img');
 
-  galleryItems.forEach(item => {
+  if (closeBtn) closeBtn.addEventListener('click', closePhotoLightbox);
+  if (prevBtn) prevBtn.addEventListener('click', () => openPhotoIndex(currentPhotoIndex - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => openPhotoIndex(currentPhotoIndex + 1));
+  if (modeBtn) modeBtn.addEventListener('click', toggleViewMode);
+
+  if (zoomBtn && activeImg) {
+    zoomBtn.addEventListener('click', () => {
+      isPhotoZoomed = !isPhotoZoomed;
+      activeImg.classList.toggle('zoomed', isPhotoZoomed);
+    });
+  }
+
+  if (fsBtn) {
+    fsBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        lightbox.requestFullscreen?.() || lightbox.webkitRequestFullscreen?.();
+      } else {
+        document.exitFullscreen?.() || document.webkitExitFullscreen?.();
+      }
+    });
+  }
+
+  // Backdrop click to close
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      closePhotoLightbox();
+    }
+  });
+
+  // Global Keyboard Navigation
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('active')) return;
+
+    if (e.key === 'ArrowRight') {
+      openPhotoIndex(currentPhotoIndex + 1);
+    } else if (e.key === 'ArrowLeft') {
+      openPhotoIndex(currentPhotoIndex - 1);
+    } else if (e.key === 'Escape') {
+      closePhotoLightbox();
+    } else if (e.key === ' ') {
+      e.preventDefault();
+      openPhotoIndex(currentPhotoIndex + 1);
+    }
+  });
+
+  // Touch Swipe for Mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const stage = document.getElementById('flow-main-stage');
+  if (stage) {
+    stage.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    stage.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchStartX - touchEndX > 50) {
+        openPhotoIndex(currentPhotoIndex + 1); // Swiped Left -> Next
+      } else if (touchEndX - touchStartX > 50) {
+        openPhotoIndex(currentPhotoIndex - 1); // Swiped Right -> Prev
+      }
+    }, { passive: true });
+  }
+
+  // Attach triggers across all pages
+  attachGalleryTriggers();
+}
+
+function attachGalleryTriggers() {
+  // 1. Gallery Items
+  document.querySelectorAll('.gallery-item').forEach((item, idx) => {
     item.addEventListener('click', () => {
       const img = item.querySelector('img');
-      const caption = item.querySelector('h5') ? item.querySelector('h5').textContent : 'Street University Event';
-      if (img && lightboxImg) {
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt || 'Street University Photo';
-        if (lightboxCaption) lightboxCaption.textContent = caption;
-        lightbox.classList.add('active');
+      if (!img) return;
+
+      // Find match in photoCatalog by image src filename
+      const imgSrc = img.getAttribute('src');
+      let foundIndex = photoCatalog.findIndex(p => imgSrc && imgSrc.includes(encodeURI(p.src.split('/').pop())) || (p.src === imgSrc) || (imgSrc.endsWith(p.src.split('/').pop())));
+      if (foundIndex === -1) {
+        foundIndex = idx % photoCatalog.length;
+      }
+      openPhotoIndex(foundIndex);
+    });
+  });
+
+  // 2. Photo Preview Stacks
+  document.querySelectorAll('.photo-preview-stack, .btn-stack-action, [data-gallery-album]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const albumKey = el.getAttribute('data-gallery-album') || 'all';
+      if (albumKey === 'imbeju') {
+        const idx = photoCatalog.findIndex(p => p.album === 'imbeju');
+        openPhotoIndex(idx !== -1 ? idx : 18);
+      } else if (albumKey === 'tech') {
+        const idx = photoCatalog.findIndex(p => p.album === 'tech');
+        openPhotoIndex(idx !== -1 ? idx : 3);
+      } else if (albumKey === 'tours') {
+        const idx = photoCatalog.findIndex(p => p.album === 'tours');
+        openPhotoIndex(idx !== -1 ? idx : 1);
+      } else if (albumKey === 'summits') {
+        const idx = photoCatalog.findIndex(p => p.album === 'summits');
+        openPhotoIndex(idx !== -1 ? idx : 0);
+      } else {
+        openPhotoIndex(0);
       }
     });
   });
 
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      lightbox.classList.remove('active');
+  // 3. Stack Album Cards
+  document.querySelectorAll('.stack-album-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const album = card.getAttribute('data-album') || 'all';
+      let idx = photoCatalog.findIndex(p => p.album === album);
+      openPhotoIndex(idx !== -1 ? idx : 0);
     });
-  }
+  });
 
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-      lightbox.classList.remove('active');
-    }
+  // 4. Past Events & Project Media Photos
+  document.querySelectorAll('.past-event-item, .past-event-thumb, .project-media').forEach((el) => {
+    const img = el.querySelector('img');
+    if (!img) return;
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', (e) => {
+      // If user clicked a button or link inside, don't hijack
+      if (e.target.closest('button') || e.target.closest('a')) return;
+      const imgSrc = img.getAttribute('src');
+      let foundIndex = photoCatalog.findIndex(p => imgSrc && imgSrc.includes(encodeURI(p.src.split('/').pop())) || (p.src === imgSrc) || (imgSrc.endsWith(p.src.split('/').pop())));
+      if (foundIndex !== -1) {
+        openPhotoIndex(foundIndex);
+      }
+    });
   });
 }
 
