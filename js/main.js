@@ -192,6 +192,87 @@ function initNavbar() {
 }
 
 /* ==========================================================================
+   1.5. HERO PHOTO ARCHIVE SLIDER
+   ========================================================================== */
+function initHeroSlider() {
+  const slider = document.getElementById('hero-slider');
+  if (!slider) return;
+
+  const track = document.getElementById('hero-slider-track');
+  const slides = slider.querySelectorAll('.hero-slide');
+  const prevBtn = document.getElementById('hero-slider-prev');
+  const nextBtn = document.getElementById('hero-slider-next');
+  const counterEl = document.getElementById('hero-slide-num');
+
+  if (!track || !slides.length) return;
+
+  let currentSlide = 0;
+  const totalSlides = slides.length;
+  let autoTimer = null;
+
+  function goToSlide(index) {
+    if (index < 0) index = totalSlides - 1;
+    if (index >= totalSlides) index = 0;
+    currentSlide = index;
+
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    slides.forEach((s, idx) => {
+      s.classList.toggle('active', idx === currentSlide);
+    });
+
+    if (counterEl) {
+      counterEl.textContent = String(currentSlide + 1).padStart(2, '0');
+    }
+  }
+
+  function startAutoPlay() {
+    autoTimer = setInterval(() => {
+      goToSlide(currentSlide + 1);
+    }, 5500);
+  }
+
+  function resetAutoPlay() {
+    clearInterval(autoTimer);
+    startAutoPlay();
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goToSlide(currentSlide - 1);
+      resetAutoPlay();
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      goToSlide(currentSlide + 1);
+      resetAutoPlay();
+    });
+  }
+
+  startAutoPlay();
+
+  // Touch Swipe for Mobile
+  let touchStartX = 0;
+  slider.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  slider.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].screenX;
+    if (touchStartX - touchEndX > 45) {
+      goToSlide(currentSlide + 1);
+      resetAutoPlay();
+    } else if (touchEndX - touchStartX > 45) {
+      goToSlide(currentSlide - 1);
+      resetAutoPlay();
+    }
+  }, { passive: true });
+}
+
+/* ==========================================================================
    2. ANIMATED IMPACT COUNTERS
    ========================================================================== */
 function initCounters() {
